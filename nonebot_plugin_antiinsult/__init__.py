@@ -53,7 +53,7 @@ def handle_curse_list(
 ) -> str:
     _msg = arg.extract_plain_text().strip().split()
     if not _msg:
-        return "用法: \n添加(删除) xxx xxx xxx ..."
+        return "用法: \n添加(删除)屏蔽词 xxx xxx xxx ..."
     if mode == "add":
         curse_list['curse'].extend(_msg)
         curse_list['curse'] = list(set(curse_list['curse']))
