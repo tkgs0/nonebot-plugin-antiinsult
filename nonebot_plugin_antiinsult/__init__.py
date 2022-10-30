@@ -24,8 +24,8 @@ from nonebot.params import CommandArg
 superusers = get_driver().config.superusers
 
 file_path = Path(__file__).parent / "curse.json"
-data_path = Path() / "data" / "anti-insult"
-curse_path = data_path / "curse.json"
+curse_path = Path() / "data" / "anti-insult" / "curse.json"
+curse_path.parent.mkdir(parents=True, exist_ok=True)
 
 curse_list = (
     json.loads(curse_path.read_text("utf-8"))
@@ -38,9 +38,6 @@ blacklist = list()
 
 
 def save_curse_path() -> None:
-    if not data_path.exists():
-        curse_path.parent.mkdir(parents=True, exist_ok=True)
-
     curse_path.write_text(
         json.dumps(curse_list, indent=2, ensure_ascii=False),
         encoding="utf-8"
@@ -53,7 +50,7 @@ def handle_curse_list(
 ) -> str:
     _msg = arg.extract_plain_text().strip().split()
     if not _msg:
-        return "用法: \n添加(删除)屏蔽词 xxx xxx xxx ..."
+        return "用法: \n添加(删除)屏蔽词 词1 词2 词3 ..."
     if mode == "add":
         curse_list['curse'].extend(_msg)
         curse_list['curse'] = list(set(curse_list['curse']))
