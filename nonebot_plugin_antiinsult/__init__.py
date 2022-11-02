@@ -33,7 +33,23 @@ curse_list = (
     else json.loads(file_path.read_text("utf-8"))
 )
 
-blacklist = list()
+blacklist = {'user': []}
+
+
+
+def is_number(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+    try:
+        import unicodedata
+        unicodedata.numeric(s)
+        return True
+    except (TypeError, ValueError):
+        pass
+    return False
 
 
 
@@ -62,9 +78,10 @@ def handle_curse_list(
     return f"已{_mode} {len(_msg)} 个屏蔽词"
 
 
+
 def handle_namelist(uid):
     uid = str(uid)
-    blacklist.append(uid)
+    blacklist['user'].append(uid)
     return f"⚠已将用户{uid}加入临时黑名单️⚠"
 
 
@@ -127,3 +144,38 @@ def namelist_processor_poke(event: PokeNotifyEvent):
     if uid in blacklist:
         logger.debug(f"用户 {uid} 在临时黑名单中, 忽略本次消息")
         raise IgnoredException("黑名单用户")
+
+
+
+
+
+
+namelist_del = on_command("解除屏蔽", permission=SUPERUSER, priority=1, block=True)
+
+@namelist_del.handle()
+async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
+    uids = arg.extract_plain_text().strip().split()
+    if not uids:
+        await namelist_del.finish("用法: \n解除屏蔽 qq qq1 qq2 ...")
+    for uid in uids:
+        if not is_number(uid):
+            await namelist_del.finish("参数错误, id必须是数字..")
+        try:
+            if isinstance(event, GroupMessageEvent):
+                await bot.set_group_ban(
+                    group_id=event.group_id,
+                    user_id=int(uid),
+                    duration=0
+                )
+        except:
+            pass
+    blacklist['user'] = [uid for uid in blacklist['user'] if uid not in uids]
+    await namelist_del.finish(f"已尝试从小黑屋释放 {len(uids)} 个用户: \n{', '.join(uids)}")
+
+
+
+check_namelist = on_command("查看临时黑名单", permission=SUPERUSER, priority=1, block=True)
+
+@check_namelist.handle()
+async def _():
+    await check_namelist.finish(f"当前已临时屏蔽{len(blacklist['user'])}个用户: \n{', '.join(blacklist['user'])}")
