@@ -93,3 +93,9 @@ nonebot.load_plugin('nonebot_plugin_antiinsult')
     <td> </td>
   </tr>
 </table>
+
+
+P.S. `解除屏蔽` 可以解除临时屏蔽, 也可以解除禁言(当然, 需要bot为群管理).  
+  
+你说从聊天界面查看屏蔽词库? 噢, 我亲爱的老伙计, 你怕是疯了!  
+  
