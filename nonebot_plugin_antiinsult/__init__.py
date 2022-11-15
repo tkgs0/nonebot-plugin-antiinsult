@@ -131,7 +131,7 @@ def namelist_processor(event: MessageEvent):
     uid = str(event.user_id)
     if uid in superusers:
         return
-    if uid in blacklist:
+    if uid in blacklist['user']:
         logger.debug(f"用户 {uid} 在临时黑名单中, 忽略本次消息")
         raise IgnoredException("黑名单用户")
 
@@ -141,7 +141,7 @@ def namelist_processor_poke(event: PokeNotifyEvent):
     uid = str(event.user_id)
     if uid in superusers:
         return
-    if uid in blacklist:
+    if uid in blacklist['user']:
         logger.debug(f"用户 {uid} 在临时黑名单中, 忽略本次消息")
         raise IgnoredException("黑名单用户")
 
@@ -150,11 +150,15 @@ def namelist_processor_poke(event: PokeNotifyEvent):
 
 
 
-namelist_del = on_command("解除屏蔽", permission=SUPERUSER, priority=1, block=True)
+namelist_del = on_command("解除屏蔽", aliases={"摘口球"}, permission=SUPERUSER, priority=1, block=True)
 
 @namelist_del.handle()
 async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
-    uids = arg.extract_plain_text().strip().split()
+    uids = (
+        [at.data['qq'] for at in event.get_message()['at']]
+        if event.get_message()['at']
+        else arg.extract_plain_text().strip().split()
+    )
     if not uids:
         await namelist_del.finish("用法: \n解除屏蔽 qq qq1 qq2 ...")
     for uid in uids:
