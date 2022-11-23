@@ -67,7 +67,7 @@ nonebot.load_plugin('nonebot_plugin_antiinsult')
     <th> 说明 </th>
   </tr>
   <tr align="center">
-    <td> (添加|删除)屏蔽词 xxx </td>
+    <td> ^(添加|删除)屏蔽词 xxx </td>
     <td> 主人 </td>
     <td> 否 </td>
     <td> 私聊 | 群聊 </td>
@@ -87,7 +87,7 @@ nonebot.load_plugin('nonebot_plugin_antiinsult')
     <td> </td>
   </tr>
   <tr align="center">
-    <td> (禁用|启用)飞(妈|马|🐴|🐎)令 </td>
+    <td> ^(禁用|启用)飞(妈|马|🐴|🐎)令 </td>
     <td> 主人 </td>
     <td> 否 </td>
     <td> 私聊 | 群聊 </td>
