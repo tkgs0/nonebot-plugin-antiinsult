@@ -67,17 +67,11 @@ nonebot.load_plugin('nonebot_plugin_antiinsult')
     <th> 说明 </th>
   </tr>
   <tr align="center">
-    <td> 添加屏蔽词 xxx </td>
+    <td> (添加|删除)屏蔽词 xxx </td>
     <td> 主人 </td>
     <td> 否 </td>
     <td> 私聊 | 群聊 </td>
-    <td rowspan="3"> 可输入多个,<br>用空格隔开 </td>
-  </tr>
-  <tr align="center">
-    <td> 删除屏蔽词 xxx </td>
-    <td> 主人 </td>
-    <td> 否 </td>
-    <td> 私聊 | 群聊 </td>
+    <td rowspan="2"> 可输入多个,<br>用空格隔开 </td>
   </tr>
   <tr align="center">
     <td> 解除屏蔽 qq </td>
@@ -92,6 +86,12 @@ nonebot.load_plugin('nonebot_plugin_antiinsult')
     <td> 私聊 | 群聊 </td>
     <td> </td>
   </tr>
+  <tr align="center">
+    <td> (禁用|启用)飞(妈|马|🐴|🐎)令 </td>
+    <td> 主人 </td>
+    <td> 否 </td>
+    <td> 私聊 | 群聊 </td>
+    <td> 开启/关闭对线模式 </td>
 </table>
 
 
