@@ -7,7 +7,8 @@ from pathlib import Path
 from typing import Literal
 from random import random, choice
 from nonebot.rule import to_me
-from nonebot import get_driver, logger, on_message, on_command
+from nonebot import get_driver, on_message, on_command
+from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.message import event_preprocessor
 from nonebot.permission import SUPERUSER
@@ -15,9 +16,9 @@ from nonebot.exception import IgnoredException
 from nonebot.adapters.onebot.v11 import (
     Bot,
     Message,
+    Event,
     MessageEvent,
     GroupMessageEvent,
-    PokeNotifyEvent
 )
 from nonebot.params import CommandArg
 
@@ -182,23 +183,12 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
 
 
 @event_preprocessor
-def namelist_processor(event: MessageEvent):
-    uid = str(event.user_id)
-    if uid in superusers:
+def blacklist_processor(event: Event):
+    if (uid := str(vars(event).get('user_id', None))) in superusers:
         return
-    if uid in blacklist['user']:
-        logger.debug(f"用户 {uid} 在临时黑名单中, 忽略本次消息")
-        raise IgnoredException("黑名单用户")
-
-
-@event_preprocessor
-def namelist_processor_poke(event: PokeNotifyEvent):
-    uid = str(event.user_id)
-    if uid in superusers:
-        return
-    if uid in blacklist['user']:
-        logger.debug(f"用户 {uid} 在临时黑名单中, 忽略本次消息")
-        raise IgnoredException("黑名单用户")
+    if uid in blacklist['userlist']:
+        logger.debug(f'用户 {uid} 在临时黑名单中, 忽略本次消息')
+        raise IgnoredException('黑名单用户')
 
 
 
