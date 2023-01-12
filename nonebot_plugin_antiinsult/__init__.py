@@ -186,7 +186,7 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
 def blacklist_processor(event: Event):
     if (uid := str(vars(event).get('user_id', None))) in superusers:
         return
-    if uid in blacklist['userlist']:
+    if uid in blacklist['user']:
         logger.debug(f'用户 {uid} 在临时黑名单中, 忽略本次消息')
         raise IgnoredException('黑名单用户')
 
