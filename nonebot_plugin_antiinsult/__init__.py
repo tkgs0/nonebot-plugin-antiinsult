@@ -162,7 +162,7 @@ anti_abuse = on_message(rule=to_me(), priority=15, block=False)
 @anti_abuse.handle()
 async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
     for i in curse_list['curse']:
-        if i in str(event.get_message()):
+        if i in event.get_plaintext():
             matcher.stop_propagation()
             if flymo_list['enable']:
                 await asyncio.sleep(random()+1)
