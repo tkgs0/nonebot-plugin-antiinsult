@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-antiinsult"
-version = "0.3.0"
+version = "0.3.1"
 description = "Anti-insult in NoneBot2"
 authors = ["月ヶ瀬"]
 license = "MIT"
