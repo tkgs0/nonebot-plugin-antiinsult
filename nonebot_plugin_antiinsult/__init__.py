@@ -1,8 +1,5 @@
 import asyncio
-try:
-    import ujson as json
-except ModuleNotFoundError:
-    import json
+import ujson as json
 from pathlib import Path
 from typing import Literal
 from random import random, choice
