@@ -38,25 +38,61 @@ _✨ NoneBot 反嘴臭插件 ✨_
   
   
 ## 💿 安装
-  
-**使用 nb-cli 安装**  
-在 nonebot2 项目的根目录下打开命令行, 输入以下指令即可安装  
-```bash
-nb plugin install nonebot-plugin-antiinsult
-```
-  
-**使用 pip 安装**  
-```bash
-pip install nonebot-plugin-antiinsult
-```
-  
-打开 nonebot2 项目的 `bot.py` 文件, 在其中写入
-```python
-nonebot.load_plugin('nonebot_plugin_antiinsult')
-```
-  
+
+**nb-cli安装, 包管理器安装  二选一**
+
+<details>
+<summary>使用 nb-cli 安装</summary>
+
+在 nonebot2 项目的根目录下打开命令行, 输入以下指令即可安装
+
+    nb plugin install nonebot-plugin-antiinsult
+
+</details>
+
+<details>
+<summary>使用包管理器安装</summary>
+
+在 nonebot2 项目的插件目录下, 打开命令行,
+
+**根据你使用的包管理器, 输入相应的安装命令**
+
+<details>
+<summary>pip</summary>
+
+    pip install nonebot-plugin-antiinsult
+
+</details>
+<details>
+<summary>pdm</summary>
+
+    pdm add nonebot-plugin-antiinsult
+
+</details>
+<details>
+<summary>poetry</summary>
+
+    poetry add nonebot-plugin-antiinsult
+
+</details>
+<details>
+<summary>conda</summary>
+
+    conda install nonebot-plugin-antiinsult
+
+</details>
+
+打开 bot项目下的 `pyproject.toml` 文件,
+
+在其 `plugins` 里加入 `nonebot_plugin_antiinsult`
+
+    plugins = ["nonebot_plugin_antiinsult"]
+
+</details>
+</details>
 
 ## 🎉 使用
+
 ### 指令表
 
 <table> 
@@ -94,7 +130,6 @@ nonebot.load_plugin('nonebot_plugin_antiinsult')
     <td> 私聊 | 群聊 </td>
     <td> 开启/关闭对线模式 </td>
 </table>
-
 
 P.S. `解除屏蔽` 可以解除临时屏蔽, 也可以解除禁言(当然, 需要bot为群管理).  
   
