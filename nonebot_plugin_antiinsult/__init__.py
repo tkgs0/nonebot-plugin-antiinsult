@@ -23,18 +23,20 @@ from nonebot.params import CommandArg
 
 superusers = get_driver().config.superusers
 
+dirpath = Path() / "data" / "anti-insult"
+dirpath.mkdir(parents=True, exist_ok=True)
+
 cursepath = Path(__file__).parent / "curse.json"
-curse_path = Path() / "data" / "anti-insult" / "curse.json"
-curse_path.parent.mkdir(parents=True, exist_ok=True)
+curse_path = dirpath / "curse.json"
+
+flymopath = Path(__file__).parent / "flymo.json"
+flymo_path = dirpath / "flymo.json"
 
 curse_list = (
     json.loads(curse_path.read_text("utf-8"))
     if curse_path.is_file()
     else json.loads(cursepath.read_text("utf-8"))
 )
-
-flymopath = Path(__file__).parent / "flymo.json"
-flymo_path = Path() / "data" / "anti-insult" / "flymo.json"
 
 flymo_list = (
     json.loads(flymo_path.read_text('utf-8'))
