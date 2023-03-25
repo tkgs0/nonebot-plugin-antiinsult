@@ -174,7 +174,7 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
                         group_id=event.group_id,
                         duration=43200
                     )
-            except:
+            except Exception:
                 msg = handle_namelist(user_id)
                 logger.info(msg)
             await anti_abuse.finish("不理你啦！バーカー", at_sender=True)
@@ -215,7 +215,7 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
                     user_id=int(uid),
                     duration=0
                 )
-        except:
+        except Exception:
             pass
     blacklist['user'] = [uid for uid in blacklist['user'] if uid not in uids]
     await namelist_del.finish(f"已尝试从小黑屋释放 {len(uids)} 个用户: \n{', '.join(uids)}")
