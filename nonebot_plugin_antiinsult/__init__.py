@@ -19,7 +19,12 @@ from nonebot.adapters.onebot.v11 import (
 )
 from nonebot.params import CommandArg
 
+from .config import Config
 
+
+ban_time: int = Config.parse_obj(get_driver().config.dict()).anti_insult_ban_time
+
+ban_time = ban_time if 0 < ban_time < 43200 else 43199
 
 superusers = get_driver().config.superusers
 
@@ -172,7 +177,7 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
                     await bot.set_group_ban(
                         user_id=user_id,
                         group_id=event.group_id,
-                        duration=43200
+                        duration=ban_time*60
                     )
             except Exception:
                 msg = handle_namelist(user_id)
