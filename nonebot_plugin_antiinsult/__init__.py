@@ -49,7 +49,17 @@ flymo_list = (
     else json.loads(flymopath.read_text("utf-8"))
 )
 
-blacklist = {'user': []}
+blacklist = {}
+
+
+
+def check_self_id(self_id) -> str:
+    self_id = f'{self_id}'
+    if not blacklist.get(self_id):
+        blacklist.update({
+            self_id: []
+        })
+    return self_id
 
 
 
@@ -104,9 +114,10 @@ def handle_curse_list(
 
 
 
-def handle_namelist(uid):
+def handle_namelist(self_id, uid):
+    self_id = check_self_id(self_id)
     uid = str(uid)
-    blacklist['user'].append(uid)
+    blacklist[self_id].append(uid)
     return f"⚠已将用户{uid}加入临时黑名单️⚠"
 
 
@@ -180,7 +191,7 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
                         duration=ban_time*60
                     )
             except Exception:
-                msg = handle_namelist(user_id)
+                msg = handle_namelist(event.self_id, user_id)
                 logger.info(msg)
             await anti_abuse.finish("不理你啦！バーカー", at_sender=True)
 
@@ -188,10 +199,12 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
 
 @event_preprocessor
 def blacklist_processor(event: Event):
+    self_id = check_self_id(event.self_id)
+
     if (uid := str(vars(event).get('user_id', None))) in superusers:
         return
-    if uid in blacklist['user']:
-        logger.debug(f'用户 {uid} 在临时黑名单中, 忽略本次消息')
+    if uid in blacklist[self_id]:
+        logger.debug(f'用户 {uid} 在 {self_id} 临时黑名单中, 忽略本次消息')
         raise IgnoredException('黑名单用户')
 
 
@@ -203,6 +216,8 @@ namelist_del = on_command("解除屏蔽", aliases={"摘口球"}, permission=SUPE
 
 @namelist_del.handle()
 async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
+    self_id = check_self_id(event.self_id)
+
     uids = (
         [at.data['qq'] for at in event.get_message()['at']]
         if event.get_message()['at']
@@ -222,7 +237,7 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
                 )
         except Exception:
             pass
-    blacklist['user'] = [uid for uid in blacklist['user'] if uid not in uids]
+    blacklist[self_id] = [uid for uid in blacklist[self_id] if uid not in uids]
     await namelist_del.finish(f"已尝试从小黑屋释放 {len(uids)} 个用户: \n{', '.join(uids)}")
 
 
@@ -230,5 +245,6 @@ async def _(bot: Bot, event: MessageEvent, arg: Message = CommandArg()):
 check_namelist = on_command("查看临时黑名单", permission=SUPERUSER, priority=1, block=True)
 
 @check_namelist.handle()
-async def _():
-    await check_namelist.finish(f"当前已临时屏蔽{len(blacklist['user'])}个用户: \n{', '.join(blacklist['user'])}")
+async def _(event: MessageEvent):
+    self_id = check_self_id(event.self_id)
+    await check_namelist.finish(f"当前已临时屏蔽{len(blacklist[self_id])}个用户: \n{', '.join(blacklist[self_id])}")
