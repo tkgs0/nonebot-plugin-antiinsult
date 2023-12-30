@@ -6,8 +6,10 @@ from random import random, choice
 from nonebot.rule import to_me
 from nonebot import get_driver, on_message, on_command
 from nonebot.log import logger
+from nonebot.plugin import PluginMetadata
 from nonebot.matcher import Matcher
 from nonebot.message import event_preprocessor
+from nonebot.params import CommandArg
 from nonebot.permission import SUPERUSER
 from nonebot.exception import IgnoredException
 from nonebot.adapters.onebot.v11 import (
@@ -17,9 +19,28 @@ from nonebot.adapters.onebot.v11 import (
     MessageEvent,
     GroupMessageEvent,
 )
-from nonebot.params import CommandArg
 
 from .config import Config
+
+
+usage: str = """
+
+指令表:
+    添加/删除屏蔽词 xxx xxx ...
+    解除屏蔽 qq qq1 qq2 ...
+    查看临时黑名单
+    禁用/启用飞🐴令    # 对喷模式开关
+
+""".strip()
+
+
+__plugin_meta__ = PluginMetadata(
+    name="反嘴臭",
+    description="反嘴臭插件",
+    usage=usage,
+    type="application",
+    homepage="https://github.com/tkgs0/nonebot-plugin-antiinsult"
+)
 
 
 ban_time: int = Config.parse_obj(get_driver().config.dict()).anti_insult_ban_time
