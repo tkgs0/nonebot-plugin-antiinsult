@@ -20,6 +20,12 @@ _✨ NoneBot 反嘴臭插件 ✨_
 <a href="https://www.python.org">
     <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="python">
 </a>
+<a href="https://nonebot.dev">
+    <img src="https://img.shields.io/badge/NoneBot-2.0.1+-red.svg" alt="NoneBot">
+</a>
+<a href="https://github.com/Mrs4s/go-cqhttp">
+    <img src="https://img.shields.io/badge/gocq-1.1.0+-blueviolet.svg" alt="go-cqhttp">
+</a>
 
 </div>
 
@@ -143,3 +149,6 @@ P.S. `解除屏蔽` 可以解除临时屏蔽, 也可以解除禁言(当然, 需�
   
 你说从聊天界面查看屏蔽词库? 噢, 我亲爱的老伙计, 你怕是疯了!  
   
+## ⚠️ 注意事项
+
+**本插件目前仅支持 nonebot2 + go-cqhttp 的使用方式, 一切非此二者结合的使用方式造成的问题请自行探索解决, 或者使用其他插件**
