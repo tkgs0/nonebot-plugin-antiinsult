@@ -20,8 +20,6 @@ from nonebot.adapters.onebot.v11 import (
     GroupMessageEvent,
 )
 
-from .config import Config
-
 
 usage: str = """
 
@@ -43,7 +41,8 @@ __plugin_meta__ = PluginMetadata(
 )
 
 
-ban_time: int = Config.parse_obj(get_driver().config.dict()).anti_insult_ban_time
+config = get_driver().config
+ban_time: int = getattr(config, "anti_insult_ban_time", 720)
 
 ban_time = ban_time if 0 < ban_time < 43200 else 43199
 
