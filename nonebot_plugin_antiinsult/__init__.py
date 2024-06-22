@@ -210,9 +210,10 @@ async def _(bot: Bot, event: MessageEvent, matcher: Matcher):
                         group_id=event.group_id,
                         duration=ban_time*60
                     )
+                else:
+                    logger.info(handle_namelist(event.self_id, user_id))
             except Exception:
-                msg = handle_namelist(event.self_id, user_id)
-                logger.info(msg)
+                logger.info(handle_namelist(event.self_id, user_id))
             await anti_abuse.finish("不理你啦！バーカー", at_sender=True)
 
 
