@@ -37,7 +37,8 @@ __plugin_meta__ = PluginMetadata(
     description="反嘴臭插件",
     usage=usage,
     type="application",
-    homepage="https://github.com/tkgs0/nonebot-plugin-antiinsult"
+    homepage="https://github.com/tkgs0/nonebot-plugin-antiinsult",
+    supported_adapters={"nonebot.adapter.onebot.v11"}
 )
 
 
